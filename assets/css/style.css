@@ -1,0 +1,14 @@
+.crystal-image {
+    height: 100px;
+    width: auto;
+}
+
+body {
+    margin: 40px;
+}
+img {
+    margin-right:10px;
+}
+button {
+    margin-top: 10px;
+}
