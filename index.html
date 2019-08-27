@@ -11,6 +11,23 @@
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <!-- <link rel="stylesheet" type="text/css" href="assets/css/reset.css"> -->
 
+    <style>
+        .crystals {
+            display: flex;
+            justify-content: space-around;
+            border: 1px solid red;
+            align-items: center;
+        }
+
+        .crystal-image {
+            border: 1px solid green;
+            height: 200px;
+            width: 200px;
+            /* background-repeat: no-repeat; */
+            background-size: cover;
+        }
+    </style>
+
     <title>Crystals Collector</title>
 </head>
 
@@ -45,102 +62,109 @@
     <!-- JAVASCRIPT  -->
 
     <script type="text/javascript">
-
+    
+        // declare global variables
         var counter = 0;
         var wins = 0;
         var losses = 0;
+        var targetNumber;
+
         var winMsg = "You won!"
         var lossMsg = "You lost :("
 
-        var targetNumber;
-
-        function getRandomInt(min, max) {
-            min = Math.ceil(min);
-            max = Math.floor(max);
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        };
-
-        // Now for the hard part. Creating multiple crystals each with their own unique number value.
-
-        // We begin by expanding our array to include four options.
-
-        function chooseNumbers() {
-            randomNum1 = (Math.floor(Math.random() * (12 - 1)) + 1);
-            randomNum2 = (Math.floor(Math.random() * (12 - 1)) + 1);
-            randomNum3 = (Math.floor(Math.random() * (12 - 1)) + 1);
-            randomNum4 = (Math.floor(Math.random() * (12 - 1)) + 1);
-        }
-
-        chooseNumbers();
-        var numberOptions = [randomNum1, randomNum2, randomNum3, randomNum4];
-        console.log(numberOptions);
-
+        // create a start game function that runs when the page loads, and when you win or lose
         function startGame() {
-            counter = 0;
-            $("#current-score").text(counter);
 
-            targetNumber = getRandomInt(19, 120);
-            console.log(targetNumber);
+            // this empties the crystals ID of its values, which will be reset in a moment
+            $("#crystals").empty();
+
+            // this is an array of the crystal images
+            var images = [
+                "assets/images/BlueGem.png",
+                "assets/images/GreenGem.png",
+                "assets/images/PurpleGem.png",
+                "assets/images/RedGem.png"
+            ];
+
+            // here we determine the random number the player is trying to hit
+            targetNumber = Math.floor(Math.random() * 120) + 19; 
+
+            // then we show that random number in the browser
             $("#number-to-guess").text(targetNumber);
 
-        }
+            // unecessary code that makes the console log easier to read 
+            console.log("-------------");
+            console.log(targetNumber);
+            console.log("-------------");
 
-        startGame();
+            // here is the for loop that will create the images, give them backgrounds, and assign them the values we will use in our game
 
-        // Next we create a for loop to create crystals for every numberOption.
-        for (var i = 0; i < numberOptions.length; i++) {
+            for (var i = 0; i < 4; i++) {
 
-            // For each iteration, we will create an image
-            var imageCrystal = $("<img src='assets/images/" + (i) + ".png' />");
+                // this generates a random number between 1-12 four times that gets assigned to each crystal
+                var randomNum = Math.floor(Math.random() * 11) + 1;
+                console.log(randomNum);
 
-            // First each crystal will be given the class ".crystal-image".
-            // This will allow the CSS to take effect.
-            imageCrystal.addClass("crystal-image");
+                // here we're creating the images, giving them a class, and giving them the attribute of the random numbers created above 
+                var crystal = $("<img>");
+                    crystal.attr({
+                    "class": "crystal-image",
+                    "data-crystalvalue": randomNum,
+                    "background-size" : "fill",
+                    "background-size" : "200px 200px"
+                });
 
-            // Each imageCrystal will be given a data attribute called data-crystalValue.
-            // This data attribute will be set equal to the array value.
-            imageCrystal.attr("data-crystalvalue", numberOptions[i]);
+                // this assigns the different images above from the array to the backgrounds
+                crystal.css({
+                    "background-image" : "url("+images[i]+")"
+                });
 
-            // Lastly, each crystal image (with all it classes and attributes) will get added to the page.
-            $("#crystals").append(imageCrystal);
-        }
+                // here we actually add those crystal images with values to the broswer within the crystals ID
+                $("#crystals").append(crystal);
 
+            };
 
-        // This time, our click event applies to every single crystal on the page. Not just one.
-        $(".crystal-image").on("click", function () {
-
-            // Determining the crystal's value requires us to extract the value from the data attribute.
-            // Using the $(this) keyword specifies that we should be extracting the crystal value of the clicked crystal.
-            // Using the .attr("data-crystalvalue") allows us to grab the value out of the "data-crystalvalue" attribute.
-            // Since attributes on HTML elements are strings, we must convert it to an integer before adding to the counter
-
-            var crystalValue = ($(this).attr("data-crystalvalue"));
-            crystalValue = parseInt(crystalValue);
-            // We then add the crystalValue to the user's "counter" which is a global variable.
-            // Every click, from every crystal adds to the global counter.
-            counter += crystalValue;
-
-            // All of the same game win-lose logic applies. So the rest remains unchanged.
-
+            // update the score with the current counter (should be 0)
             $("#current-score").text(counter);
 
+        }
+
+        // run the startGame function when the page loads to set everything up
+        startGame();
+
+        // this is the code that runs everytime you click a crystal
+        $(document).on('click', ".crystal-image", function () {
+
+            // this code takes the random number assigned to the crystals and converts it into an integer so we can use it
+            var crystalValue = ($(this).attr("data-crystalvalue"));
+            crystalValue = parseInt(crystalValue);
+   
+            // now we're adding the values of the crystals to the counter (why we needed integers)
+            counter += crystalValue;
+
+            // update the score everytime we add to it
+            $("#current-score").text(counter);
+
+            // this is code that runs if you WIN
             if (counter === targetNumber) {
                 wins++;
                 $("#wins").text(wins);
                 $("#message").text(winMsg);
-
+                counter = 0;
                 startGame();
             }
 
+            // this is code that runs if you LOSE
             else if (counter >= targetNumber) {
                 losses++;
                 $("#losses").text(losses);
                 $("#message").text(lossMsg);
-
+                counter = 0;
                 startGame();
             }
 
         });
+
 
     </script>
 
