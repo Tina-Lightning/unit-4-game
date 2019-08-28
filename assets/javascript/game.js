@@ -41,7 +41,7 @@ function startGame() {
         console.log(randomNum);
 
         // here we're creating the images, giving them a class, and giving them the attribute of the random numbers created above 
-        var crystal = $("<img>");
+        var crystal = $("<div>");
             crystal.attr({
             "class": "crystal-image",
             "data-crystalvalue": randomNum

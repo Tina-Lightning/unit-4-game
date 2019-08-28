@@ -17,8 +17,8 @@
 
 <body>
     <div class="row">
-        <div class="col-lg-3"></div>
-        <div class="col-lg-6">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
 
             <h1>Crystals Collector</h1>
             <p>These are instructions: Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sapiente,
@@ -29,18 +29,32 @@
                 beatae
                 cum, libero, repellendus magni!</p>
 
-            <p>Number to Guess: <span id="number-to-guess"></span></p>
-            <p>Your total score is: <span id="current-score"></span></p>
+            <hr>
 
-            <p id="message">Click any crystal to start</p>
-            <p>Wins: <span id="wins"></span></p>
-            <p>Losses: <span id="losses"></span></p>
+            <p class="score text-center">Number to Guess: <span id="number-to-guess"></span></p>
+            <p class="score text-center">Your Total Score: <span id="current-score"></span></p>
+
+            <hr>
+
+            <!-- <p class="text-center"><span id="message">Click any crystal to start</span></p> -->
 
             <section id="crystals">
             </section>
 
+            <hr>
+
+            <div class="row scoreboard">
+                <div class="col-sm-6">
+                    <p class="win-text">Wins: <span id="wins"></span></p>
+                </div>
+                <div class="col-sm-6">
+                    <p class="loss-text">Losses: <span id="losses"></span></p>
+                </div>
+            </div>
+
+
         </div>
-        <div class="col-lg-3"></div>
+        <div class="col-sm-2"></div>
     </div>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
