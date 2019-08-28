@@ -10,163 +10,41 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <!-- <link rel="stylesheet" type="text/css" href="assets/css/reset.css"> -->
-
-    <style>
-        .crystals {
-            display: flex;
-            justify-content: space-around;
-            border: 1px solid red;
-            align-items: center;
-        }
-
-        .crystal-image {
-            border: 1px solid green;
-            height: 200px;
-            width: 200px;
-            /* background-repeat: no-repeat; */
-            background-size: cover;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css?family=Bangers|Gudea&display=swap" rel="stylesheet">
 
     <title>Crystals Collector</title>
 </head>
 
 <body>
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
 
-    <div class="card">
-        <h1>Crystals Collector</h1>
-        <p>These are instructions: Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sapiente, consectetur
-            quaerat!
-            Odio quaerat fugiat voluptate ab iure? Soluta molestias asperiores animi totam voluptates, harum aliquid
-            beatae
-            cum, libero, repellendus magni!</p>
+            <h1>Crystals Collector</h1>
+            <p>These are instructions: Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sapiente,
+                consectetur
+                quaerat!
+                Odio quaerat fugiat voluptate ab iure? Soluta molestias asperiores animi totam voluptates, harum
+                aliquid
+                beatae
+                cum, libero, repellendus magni!</p>
+
+            <p>Number to Guess: <span id="number-to-guess"></span></p>
+            <p>Your total score is: <span id="current-score"></span></p>
+
+            <p id="message">Click any crystal to start</p>
+            <p>Wins: <span id="wins"></span></p>
+            <p>Losses: <span id="losses"></span></p>
+
+            <section id="crystals">
+            </section>
+
+        </div>
+        <div class="col-lg-3"></div>
     </div>
-
-    <div class="card">
-        <h3>Number to Guess: <span id="number-to-guess"></span></h3>
-        <h3>Your total score is: <span id="current-score"></span></h3>
-    </div>
-
-    <section class="card" id="scoreboard">
-        <p id="message">Click any crystal to start</p>
-        <p>Wins: <span id="wins"></span></p>
-        <p>Losses: <span id="losses"></span></p>
-    </section>
-
-
-    <section id="crystals">
-    </section>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-    <!-- JAVASCRIPT  -->
-
-    <script type="text/javascript">
-    
-        // declare global variables
-        var counter = 0;
-        var wins = 0;
-        var losses = 0;
-        var targetNumber;
-
-        var winMsg = "You won!"
-        var lossMsg = "You lost :("
-
-        // create a start game function that runs when the page loads, and when you win or lose
-        function startGame() {
-
-            // this empties the crystals ID of its values, which will be reset in a moment
-            $("#crystals").empty();
-
-            // this is an array of the crystal images
-            var images = [
-                "assets/images/BlueGem.png",
-                "assets/images/GreenGem.png",
-                "assets/images/PurpleGem.png",
-                "assets/images/RedGem.png"
-            ];
-
-            // here we determine the random number the player is trying to hit
-            targetNumber = Math.floor(Math.random() * 120) + 19; 
-
-            // then we show that random number in the browser
-            $("#number-to-guess").text(targetNumber);
-
-            // unecessary code that makes the console log easier to read 
-            console.log("-------------");
-            console.log(targetNumber);
-            console.log("-------------");
-
-            // here is the for loop that will create the images, give them backgrounds, and assign them the values we will use in our game
-
-            for (var i = 0; i < 4; i++) {
-
-                // this generates a random number between 1-12 four times that gets assigned to each crystal
-                var randomNum = Math.floor(Math.random() * 11) + 1;
-                console.log(randomNum);
-
-                // here we're creating the images, giving them a class, and giving them the attribute of the random numbers created above 
-                var crystal = $("<img>");
-                    crystal.attr({
-                    "class": "crystal-image",
-                    "data-crystalvalue": randomNum,
-                    "background-size" : "fill",
-                    "background-size" : "200px 200px"
-                });
-
-                // this assigns the different images above from the array to the backgrounds
-                crystal.css({
-                    "background-image" : "url("+images[i]+")"
-                });
-
-                // here we actually add those crystal images with values to the broswer within the crystals ID
-                $("#crystals").append(crystal);
-
-            };
-
-            // update the score with the current counter (should be 0)
-            $("#current-score").text(counter);
-
-        }
-
-        // run the startGame function when the page loads to set everything up
-        startGame();
-
-        // this is the code that runs everytime you click a crystal
-        $(document).on('click', ".crystal-image", function () {
-
-            // this code takes the random number assigned to the crystals and converts it into an integer so we can use it
-            var crystalValue = ($(this).attr("data-crystalvalue"));
-            crystalValue = parseInt(crystalValue);
-   
-            // now we're adding the values of the crystals to the counter (why we needed integers)
-            counter += crystalValue;
-
-            // update the score everytime we add to it
-            $("#current-score").text(counter);
-
-            // this is code that runs if you WIN
-            if (counter === targetNumber) {
-                wins++;
-                $("#wins").text(wins);
-                $("#message").text(winMsg);
-                counter = 0;
-                startGame();
-            }
-
-            // this is code that runs if you LOSE
-            else if (counter >= targetNumber) {
-                losses++;
-                $("#losses").text(losses);
-                $("#message").text(lossMsg);
-                counter = 0;
-                startGame();
-            }
-
-        });
-
-
-    </script>
+    <script type="text/javascript" src="assets/javascript/game.js"></script>
 
 </body>
 
