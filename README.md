@@ -6,7 +6,7 @@ This front-end application the uses HTML5, CSS, JavaScript and jQuery. This proj
 
 The game works as follows: 
 
-* There are four crystals displayed as buttons on the page.
+* There are four crystals displayed on the page.
 
 * The player is shown a goal number at the start of the game.
 
