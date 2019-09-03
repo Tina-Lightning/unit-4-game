@@ -22,7 +22,7 @@ function startGame() {
     ];
 
     // here we determine the random number the player is trying to hit
-    targetNumber = Math.floor(Math.random() * 120) + 19; 
+    targetNumber = Math.floor(Math.random() * (120 - 19 + 1) + 19);
 
     // then we show that random number in the browser
     $("#number-to-guess").text(targetNumber);
